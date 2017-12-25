@@ -1,0 +1,15 @@
+All the game runs through clumsy-min.js. I compile it from the master
+that I have. I didn’t include it because of grunt and node_modules,
+etc.
+
+The assets are in the data folder.
+
+game.html is where the game is launched from. the canvas is launched
+from <div id=“#screen></div>, so if that can be embedded in the
+component, I’d guess that would allow it to be run as a separate
+entity. I know how how to get the score from the game, and how to put
+the top score from he api in, I just couldn’t do that without it being
+implemented.
+
+I can change the game and link it all up once the component and routing
+is done. (i’m pretty sure…)
