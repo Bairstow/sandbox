@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Caddy Connect</title>
+  <link rel='stylesheet' href='./css/main.css'>
+  <link rel="stylesheet" href="./css/materialize.min.css">
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="/js/materialize.min.js"></script>
+</head>
+<body>
+  <nav class="slate-color" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">CaddyConnect</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Sign in</a></li>
+        <li><a href="#"><i class="icon ion-android-menu white-text"></i></a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Sign in</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="icon ion-android-menu white-text"></i></a>
+    </div>
+  </nav>
+  <div class="container">
+    <%= yield %>
+  </div>
+  <footer class="page-footer" id="layout-footer">
+    <div class="footer-copyright">
+      <div class="container">
+      <a class="grey-text text-darken-2" href="/">JB</a> - Second GA WDI Project
+      </div>
+    </div>
+  </footer>
+</body>

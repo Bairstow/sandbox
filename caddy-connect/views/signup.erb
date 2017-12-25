@@ -1,0 +1,83 @@
+<br><br>
+<div class="row">
+  <form class="col s12" action="/user/new" method="post">
+    <div class="row">
+      <div class="input-field col s6">
+        <i class="icon ion-person slate-text prefix"></i>
+        <input placeholder="First Name" id="first_name" type="text" class="validate" name="first-name">
+        <label for="first_name">First Name</label>
+      </div>
+      <div class="input-field col s6">
+        <input placeholder="Last Name" id="last_name" type="text" class="validate" name="last-name">
+        <label for="last_name">Last Name</label>
+      </div>
+    </div>
+    <div class="row">
+    <p>
+      <div class="col s4">
+        <span class="slate-text">Sign up for: </span>
+      </div>
+      <div class="col s4">
+        <input type="checkbox" class="filled-in" id="player-checkbox"/ name="player-checkbox">
+        <label for="player-checkbox">Player</label>
+      </div>
+      <div class="col s4">
+        <input type="checkbox" class="filled-in" id="caddy-checkbox"/ name="caddy-checkbox">
+        <label for="caddy-checkbox">Caddy</label>
+      </div>
+    </p>
+    </div>
+    <div class="row">
+      <div class="input-field col s4">
+        <input placeholder="Optional" id="age" type="text" class="validate" name="age">
+        <label for="age">Age</label>
+      </div>
+      <div class="input-field col s4">
+        <input placeholder="Optional" id="gender" type="text" class="validate" name="gender">
+        <label for="gender">Gender (M/F)</label>
+        <label>Gender</label>
+      </div>
+      <div class="input-field col s4">
+        <input placeholder="Optional" id="handicap" type="text" class="validate" name="handicap">
+        <label for="handicap">Handicap</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input placeholder="Optional" id="home-course" type="text" class="validate" name="home-course">
+        <label for="home-course">Home Course</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input placeholder="Optional" id="suburb" type="text" class="validate" name="suburb">
+        <label for="suburb">Location (Suburb)</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea placeholder="Optional" id="history" class="materialize-textarea" name="history"></textarea>
+        <label for="history">Playing history/Bio</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input placeholder="Email" id="email" type="email" class="validate" name="email">
+        <label for="email">Email</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input placeholder="Password" id="password" type="password" class="validate" name="password">
+        <label for="password">Password</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="center-align">
+        <button class="btn waves-effect waves-light secondary-color" type="submit">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

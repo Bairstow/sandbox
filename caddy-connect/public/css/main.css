@@ -1,0 +1,23 @@
+.primary-color {
+  background-color: #277455;
+}
+
+.secondary-color {
+  background-color: #5E9732;
+}
+
+.slate-color {
+  background-color: #3D4044;
+}
+
+.slate-text {
+  color: #3D4044;
+}
+
+#layout-footer {
+  background-color: #3D4044;
+}
+
+.search-map {
+  height: 300px;
+}
