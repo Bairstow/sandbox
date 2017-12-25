@@ -1,0 +1,29 @@
+{
+  "name": "reactHyperscriptBase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "production": "webpack -p",
+    "start": "webpack-dev-server"
+  },
+  "author": "jb",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.7.6",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2016": "^6.0.11",
+    "babel-preset-react": "^6.5.0",
+    "html-webpack-plugin": "^2.15.0",
+    "webpack": "^1.12.15",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "axios": "^0.9.1",
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1",
+    "react-hyperscript": "^2.4.0",
+    "react-router": "^2.1.1"
+  }
+}
