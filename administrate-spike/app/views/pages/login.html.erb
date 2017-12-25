@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>Authenticate</h2>
+  </div>
+</div>
+<div class="row">
+  <form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+    </div>
+    <button class="btn btn-default" id="login-button">Submit</button>
+  </form>
+</div>
+
+<script>
+  var loginButton = $('#login-button');
+  loginButton.on('click', function(event) {
+    event.preventDefault();
+    var settings = {
+      url: '/api/v1/token',
+      dataType: 'json',
+      headers: {
+        email: $('#exampleInputEmail').val(),
+        password: $('#exampleInputPassword').val()
+      },
+      method: 'POST'
+    }
+    console.log(settings);
+    $.ajax(settings)
+      .done(function(response) {
+        if (response.access_token) {
+          console.log(response.access_token);
+          sessionStorage.accessToken = response.access_token;
+          // on successful storing of access token use this to access the administrate page
+          $.ajax({
+            url: '/admin',
+            headers: {
+              'Authorization': 'Bearer ' + sessionStorage.accessToken
+            },
+            method: 'GET'
+          }).done(function(response) {
+            $(document).html(response);
+          });
+        } else if (response.error) {
+          console.log(response.error);
+        }
+      });
+  });
+</script>
