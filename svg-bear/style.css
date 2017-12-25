@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.bear-svg-two {
+  width: 800px;
+  height: 800px;
+  background-color: #EFEFEF;
+}
+
+.bear-svg-two line {
+  fill: none;
+  stroke: #00FF00;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  opacity: 0.1;
+  transition: 0.2s;
+}
+
+.bear-svg-two line:hover {
+  stroke: #0000FF;
+}
