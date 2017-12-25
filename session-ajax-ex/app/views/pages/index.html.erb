@@ -1,0 +1,38 @@
+<div>
+  Homepage - Yo
+</div>
+<div>
+  <% if session[:current_user_id] %>
+    <a href='/logout'>
+      <button>
+        Logout
+      </button>
+    </a>
+  <% else %>
+    <a href='/login'>
+      <button>
+        Login
+      </button>
+    </a>
+  <% end %>
+</div>
+<div>
+  <h2>Ajax check button</h2>
+  <button id="logButton">Check</button>
+</div>
+<div>Current Session Status</div>
+<div id="sessionStatus"></div>
+<script>
+  $('#logButton').on('click', function(event) {
+    console.log('Checking current session status')
+    $.ajax({
+      url: '/ajax_check'
+    }).done(function(data) {
+      if (data.error) {
+        $('#sessionStatus').text(data.error);
+      } else {
+        $('#sessionStatus').text(data.name);
+      }
+    });
+  });
+</script>
