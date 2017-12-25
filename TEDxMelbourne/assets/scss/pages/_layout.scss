@@ -1,0 +1,126 @@
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  font-size: 16px;
+}
+
+.white-bg {
+  background-color: #ffffff;
+}
+
+.black-bg {
+  background-color: #181818;
+}
+
+.grey-bg {
+  background-color: #e3e3e3;
+}
+
+.logo-display {
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+  margin-left: 2rem;
+  max-width: 80%;
+}
+
+.header-break {
+  background-color: #cdcdcd;
+  height: 2px;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.adventurous-minds-title {
+  color: #ee3323;
+  font-size: 4.6rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-left: 5px;
+  margin-top: 4rem;
+  margin-bottom: 1.4rem;
+}
+
+.signup-row {
+  min-height: 6rem;
+}
+
+.signup-call {
+  margin-left: 5px;
+  padding-top: 24px;
+}
+.signup-call * {
+  line-height: 4rem;
+  display: inline-block;
+}
+
+.signup-form {
+  margin: 0 auto;
+  padding-top: 2.4rem;
+}
+.signup-form input {
+  border: none;
+  line-height: 4rem;
+  width: 50%;
+  background-color: #e3e3e3;
+  padding-left: 1.4rem;
+}
+.signup-button {
+  border: none;
+  line-height: 4rem;
+  width: 35%;
+  min-width: 10rem;
+  margin: none;
+  background-color: #ee3323;
+  text-align: center;
+  color: $white;
+}
+
+.main-copy {
+}
+
+.event-link-container {
+  width: 100%;
+}
+
+.event-link {
+  border: none;
+  line-height: 4rem;
+  width: 20%;
+  min-width: 10rem;
+  margin-top: 3rem;
+  margin-left: 40%;
+  margin-bottom: 3rem;
+  background-color: #ee3323;
+  text-align: center;
+  color: $white;
+}
+
+.page-break {
+  height: 1px;
+  background-color: #cdcdcd;
+  margin: 4rem 0;
+  width: 100%;
+}
+
+.gutter-left {
+  margin-left: 15px;
+}
+
+.gutter-right {
+  margin-right: 15px;
+}
+
+.gutter-top {
+  margin-top: 15px;
+}
+
+.gutter-bottom {
+  margin-bottom: 15px;
+}
+
+.contents {
+  padding-top: 10px;
+  padding-bottom: 50px;
+}

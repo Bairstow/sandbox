@@ -1,0 +1,33 @@
+header {
+  padding-top: 30px;
+  padding-bottom: 20px;
+
+  .header-date-location {
+    color: $black;
+    font-size: 3rem;
+    line-height: 3.6rem;
+    margin-top: 4px;
+    margin-left: 5px;
+    margin-bottom: 6rem;
+    .date {
+      display: block;
+    }
+    .location {
+    }
+  }
+
+  .call-to-action {
+    padding-top: 10px;
+    .copy {
+      padding-right: 10px;
+      padding-top: 6px;
+      color: $white;
+    }
+  }
+
+  //-- Responsive Tweaks ----------------------------------------------------
+  @include respond-to(tablet-portrait) {
+    padding-top: 0
+  }
+
+}
