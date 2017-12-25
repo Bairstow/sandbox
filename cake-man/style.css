@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  margin: 20px auto;
+  background-color: #0A0D0D;
+}
+
+.guess {
+  position: absolute;
+  width: 300px;
+  height: 100px;
+  top: 50px;
+  left: 50px;
+  line-height: 50px;
+  color: #FAFDFD;
+  text-transform: uppercase;
+  text-align: center;
+}
+.guess-title {
+  position: relative;
+  height: 50px;
+  font-weight: 100;
+  font-size: 20px;
+}
+.guess-output {
+  position: relative;
+  height: 50px;
+  font-weight: 300px;
+  font-size: 30px;
+}
+
+.cake {
+  position: absolute;
+  width: 300px;
+  height: 350px;
+  top: 50px;
+  right: 50px;
+  line-height: 50px;
+  color: #FAFDFD;
+  text-transform: uppercase;
+}
+.cake-title {
+  position: relative;
+  height: 50px;
+  font-weight: 100;
+  font-size: 20px;
+  text-align: center;
+}
+.cake-output {
+  height: 300px;
+  line-height: 300px;
+  font-size: 80px;
+  text-align: center;
+  color: #FAFDFD;
+}
+.cake-svg {
+  height: 300px;
+  width: 300px;
+}
+
+.answer {
+  position: absolute;
+  width: 600px;
+  height: 100px;
+  bottom: 80px;
+  left: 100px;
+  line-height: 100px;
+  color: #FAFDFD;
+}
+.answer-output {
+  text-align: center;
+  font-size: 60px;
+  text-transform: uppercase;
+}
