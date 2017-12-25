@@ -1,0 +1,85 @@
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  color: #555;
+}
+
+.uiSeparator {
+  height: 1px;
+  background-color: orange;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+.uiHeaderProfile {
+  padding: 1rem;
+}
+.uiHeaderProfileWrapper {
+  position: relative;
+  padding-bottom: 30.666667%;
+}
+.uiHeaderProfilePhoto {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  background-color: white;
+  border-radius: 50%;
+}
+.uiHeaderProfileTag {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  text-align: center;
+  padding: 5%;
+}
+.uiHeaderProfileBio {
+  padding: 5%;
+}
+.uiHeaderSplashWrapper {
+  position: relative;
+  padding-bottom: 28%;
+  background-color: #BBB;
+}
+.uiHeaderSplash {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  text-align: center;
+  padding:10%;
+}
+.uiHeaderContactWrapper {
+  position: relative;
+  margin-top: 5%;
+  padding-bottom: 45%;
+  background-color: #BBB;
+}
+.uiHeaderContact {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  text-align: center;
+  padding:10%;
+}
+
+.uiNavBar {
+}
+.uiNavBarLink {
+  text-align: center;
+  background-color: gold;
+}
+
+.headingText {
+  font-family: "Lora", serif;
+  font-size: 3vw;
+}
+.subHeadingText {
+  font-size: 1.5vw;
+  font-weight: 300;
+  font-style: italic;
+  color: #888;
+}
+
+.test-grey-one {
+  background-color: #DDD;
+}
+.test-grey-two {
+  background-color: #BBB;
+}
+.test-grey-three {
+  background-color: #999;
+}

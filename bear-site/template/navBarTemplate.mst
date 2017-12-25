@@ -1,0 +1,11 @@
+<div class="uiNavBar test-grey-two">
+  <div class="row">
+    <div class="uiNavBarLink three columns">home</div>
+    <div class="uiNavBarLink three columns">topics</div>
+    <div class="uiNavBarLink three columns">about</div>
+    <div class="uiNavBarLink three columns">search</div>
+  </div>
+  <div class="row">
+    <div class="uiSeparator"></div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="uiHeader test-grey-one">
+  <div class="row">
+    <div class="uiSeparator twelve columns"></div>
+  </div>
+  <div class="row">
+    <div class="uiHeaderProfile six columns test-grey-three">
+      <div class="row">
+        <div class="uiHeaderProfileWrapper four columns">
+          <div class="uiHeaderProfilePhoto"></div>
+        </div>
+        <div class="uiHeaderProfileWrapper eight columns">
+          <div class="uiHeaderProfileTag test-grey-one">
+            <span class="headingText">{{ name }}</span>
+            <br>
+            <span class="subHeadingText">eat. sleep. dev. repeat.</span>
+            <div class="uiSeparator row"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="uiHeaderProfileBio test-grey-two">Profile Bio Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+      </div>
+    </div>
+    <div class="uiHeaderSplashWrapper four columns test-grey-two">
+      <div class="uiHeaderSplash">
+        bear img
+      </div>
+    </div>
+    <div class="uiHeaderFeature two columns  test-grey-three">
+      <div class="uiHeaderContactWrapper">
+        <div class="uiHeaderContact">
+          Github
+        </div>
+      </div>
+      <div class="uiHeaderContactWrapper">
+        <div class="uiHeaderContact">
+          LinkedIn
+        </div>
+      </div>
+      <div class="uiHeaderContactWrapper">
+        <div class="uiHeaderContact">
+          Twitter
+        </div>
+      </div>
+      <div class="uiHeaderContactWrapper">
+        <div class="uiHeaderContact">
+          Email
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="uiSeparator twelve columns"></div>
+  </div>
+</div>
