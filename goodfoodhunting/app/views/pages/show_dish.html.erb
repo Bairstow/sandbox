@@ -1,0 +1,75 @@
+<div class="ui-card show-page" data-id=<%= @dish.id %>>
+  <div class="ui-card-header">
+    <img class="ui-card-avatar" src="http://placehold.it/200x200">
+    <div class="ui-card-username">
+      <%= @dish.user_name %>
+    </div>
+    <div class="ui-card-timestamp faded-text">15m</div>
+  </div>
+  <div class="ui-card-photo show-photo" style="background-image: url(<%= @dish.image_url %>);">
+    <div class="ui-card-like-indicator">&hearts;</div>
+  </div>
+  <div class="ui-card-info">
+    <div class="ui-card-dish-title"><%= @dish.name %> <span class="faded-text">- <%= @dish.dish_type_name %></span></div>
+    <div class="ui-card-venue"><span class="faded-text">@ </span><%= @dish.venue_name %></div>
+  </div>
+  <div class="ui-card-footer">
+    <div class="ui-card-bookmark">&#x2668;</div>
+    <div class="ui-card-like-counter"><%= @dish.counter %> &hearts;</div>
+  </div>
+</div>
+
+<script>
+  function isDescendant(parent, child) {
+     var node = child.parentNode;
+     while (node != null) {
+       if (node == parent) {
+           return true;
+       }
+       node = node.parentNode;
+     }
+     return false;
+  }
+
+  var updateLikes = function(target, data) {
+    // get list of cards
+    var dishCards = document.getElementsByClassName('ui-card');
+    var dishLikes = document.getElementsByClassName('ui-card-like-counter');
+    for (var i = 0; i < dishCards.length; i++) {
+      if (isDescendant(dishCards[i], target)) {
+        for (var j = 0; j < dishLikes.length; j++) {
+          if (isDescendant(dishCards[i], dishLikes[j])) {
+            // update the likes for the clicked card
+            // var currentLikes = Number(dishLikes[j].getAttribute('data-count'));
+            // currentLikes++
+            // dishLikes[j].innerHTML = String(currentLikes);
+            dishLikes[j].setAttribute('data-count', data.count);
+            dishLikes[j].innerHTML = String(data.count) + " &hearts;";
+          }
+        }
+      }
+    }
+  };
+
+  var getDishId = function(target) {
+    var dishCards = document.getElementsByClassName('ui-card');
+    for (var i = 0; i < dishCards.length; i++) {
+      if (isDescendant(dishCards[i], target)) {
+        return dishCards[i].getAttribute('data-id');
+      }
+    }
+  };
+
+  $('main').on("click", $('.ui-card-like-indicator'), function(event) {
+    var targetDish = event.target;
+    var targetId = getDishId(targetDish);
+    var options = {
+      url: '/api/dishes/' + targetId + '/likes',
+      method: 'post',
+      dataType: 'json'
+    };
+    $.ajax(options).done(function(data) {
+      updateLikes(targetDish, data);
+    });
+  });
+</script>

@@ -1,0 +1,11 @@
+<h2>users</h2>
+<p><a href="/users/new">new user</a></p>
+
+<% @users.each do |user| %>
+  <div>
+    <a href="/users/<%= user.id %>">
+      <%= user.email %>
+    </a>
+    <a href="/users/<%= user.id %>/edit"><button>edit</button></a>
+  </div>
+<% end %>

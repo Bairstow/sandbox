@@ -1,0 +1,8 @@
+<h2>likes</h2>
+<p><%= link_to 'new like', new_admin_like_path %></p>
+
+<% @likes.each do |like| %>
+  <div>
+    <%= like.id %>: <%= like.dish.name %>
+  </div>
+<% end %>

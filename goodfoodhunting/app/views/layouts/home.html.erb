@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Goodfoodhunting</title>
+  <%= stylesheet_link_tag    'front', media: 'all', 'data-turbolinks-track' => true %>
+  <link href='https://fonts.googleapis.com/css?family=Passion+One:400,700' rel='stylesheet' type='text/css'>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <header class="top-nav">
+    <div class="header-container">
+      <div class="header-title"><a href="/">GoodFoodHunting</a></div>
+      <div class="header-find-link">Find</div>
+      <div class="header-share-link">Share</div>
+      <div class="header-search-input">
+        <form action="">
+          <input type="text" placeholder="Search by dish, venue or person">
+          <button>Search</button>
+        </form>
+      </div>
+      <div class="header-sign-in">
+        <% if logged_in? %>
+          <a href="/logout"><%= current_user_name %> out?</a>
+        <% elsif %>
+          <a href="/login">Sign in</a>
+        <% end %>
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="main-container">
+      <%= yield %>
+    </div>
+  </main>
+
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <script>
+    $(window).on('scroll', function() {
+      if ($(window).scrollTop() > 100) {
+        $('.top-nav').addClass('mini');
+      } else {
+        $('.top-nav').removeClass('mini');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<h2>dishes</h2>
+<p><%= link_to 'new dish', new_admin_dish_path %></p>
+
+<% @dishes.each do |dish| %>
+  <div>
+    <%= link_to dish.name, admin_dish_path(dish.id) %>
+    <img src="<%= dish.image_url %>" alt="">
+    <%= link_to 'edit', edit_admin_dish_path(dish.id) %>
+  </div>
+<% end %>

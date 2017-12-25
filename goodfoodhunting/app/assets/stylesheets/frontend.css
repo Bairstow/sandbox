@@ -1,0 +1,190 @@
+body {
+  font-family: 'Passion One', cursive;
+}
+
+.main-container, .header-container {
+  max-width: 960px;
+}
+
+.main-container {
+  margin: 3rem auto;
+}
+
+.header-container {
+  margin: 0 auto;
+  display: flex;
+  background: white;
+  color: black;
+  height: 3rem;
+  line-height: 3rem;
+}
+
+.header-title {
+  flex: 3;
+  font-size: 1.8rem;
+}
+
+.header-find-link, .header-share-link, .header-sign-in {
+  flex: 1;
+  font-size: 1.4rem;
+}
+
+.header-search-input {
+  flex: 3;
+  font-size: 1.4rem;
+}
+
+.header-sign-in {
+  padding-right: 2rem;
+  text-align: right;
+}
+
+.top-nav {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  height: 3rem;
+  z-index: 2;
+  transition: 0.3s;
+}
+
+.mini {
+  height: 1rem;
+}
+
+.ui-card {
+  float: left;
+  width: 23%;
+  margin: 1%;
+  border-radius: 2%;
+  background-color: #404040;
+  color: white;
+  transition: 0.3s;
+  box-shadow: 2px 2px 2px #9A9D9D;
+}
+
+.show-page {
+  width: 100%;
+}
+
+.ui-card:hover {
+  margin-top: 2%;
+  margin-bottom: 0;
+}
+
+.ui-card:hover .ui-card-like-indicator {
+  opacity: 1;
+}
+
+.ui-card-header {
+  float: none;
+  display: flex;
+  height: 3rem;
+}
+
+.ui-card-avatar {
+  flex: 1;
+  max-width: 3rem;
+  height: 100%;
+  border-radius: 50%;
+  padding: 0.2rem;
+}
+
+.ui-card-username {
+  flex: 3;
+  text-align: left;
+  height: 3rem;
+  margin: 1rem;
+  padding-left: 1rem;
+  line-height: 2.8rem;
+  color: white;
+}
+
+.ui-card-timestamp {
+  flex: 1;
+  text-align: right;
+  height: 3rem;
+  margin: 1rem;
+  padding-right: 1rem;
+  line-height: 2.8rem;
+}
+
+.ui-card-photo {
+  float: none;
+  width: 100%;
+  height: 10rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  overflow: hidden;
+}
+
+.show-photo {
+  height: 30rem;
+}
+
+.ui-card-like-indicator {
+  opacity: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  font-size: 2rem;
+  margin-top: 5%;
+  margin-right: 5%;
+  color: white;
+  float: right;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.ui-card-like-indicator:hover {
+  color: fuchsia;
+}
+
+.ui-card-info {
+  float: none;
+}
+
+.ui-card-dish-title {
+  margin-top: 5%;
+  margin-left: 5%;
+  color: #C6E17E;
+}
+
+.ui-card-venue {
+  margin-left: 5%;
+}
+
+.faded-text {
+  color: #6B6B6B;
+}
+
+.ui-card-footer {
+  display: flex;
+}
+
+.ui-card-bookmark {
+  flex: 2;
+  margin: 5%;
+}
+
+.ui-card-comment-counter {
+  flex: 1;
+  margin: 5%;
+  text-align: right;
+}
+
+.ui-card-like-counter {
+  flex: 1;
+  text-align: right;
+  margin: 5%;
+}
+
+.load-more {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 1.4rem;
+  line-height: 1.4rem;
+  text-align: center;
+  background-color: #EAEAEA;
+}
