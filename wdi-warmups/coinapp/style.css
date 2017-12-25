@@ -1,0 +1,52 @@
+* {
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0;
+  outline: 0;
+  border: 0;
+}
+
+#headDiv {
+  height: 40px;
+  border-radius: 8px;
+  background-color: #EF4836;
+  font-size: 24px;
+  padding-top: 30px;
+}
+
+#coinTitle {
+  padding-top: 8px;
+  padding-bottom: 10px;
+  color: #677;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+#coinDraw {
+  width: 200px;
+  height: 200px;
+}
+
+#coinOutline {
+  fill: #F39C12;
+}
+
+#coinText {
+  font-size: 100px;
+}
+
+#resultDiv {
+  margin-top: 20px;
+  height: 80px;
+  border-radius: 8px;
+  background-color: #F5AB35;
+}
+
+#resultTitle {
+  padding-top: 16px;
+}
+
+#resultText {
+  padding-top: 10px;
+}
