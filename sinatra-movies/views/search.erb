@@ -1,0 +1,16 @@
+<div class="row">
+<% movies.each do |movie| %>
+    <div class="col s4">
+      <a href="/about/<%= movie["imdbID"] %>">
+        <div class="card hoverable search-card">
+          <img class="movie-poster" src="<%= movie["Poster"] %>" alt="No Poster">
+          <div class="poster-scrim">
+            <div class="search-text">
+              <span class="card-title white-text center-align"><%= movie["Title"] %></span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+<% end %>
+</div>

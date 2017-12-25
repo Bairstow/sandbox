@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="card col s12">
+    <div class="col s8 movie-card">
+      <div class="about">
+        <div class="card-title black-text center-align">
+          <%= movie['title'] %>
+        </div>
+        <div class="card-content">
+          <div><span class="light-info">Released - </span><span><%= movie['released'] %></span></div>
+          <div><span class="light-info">Rated - </span><span><%= movie['rated'] %></span></div>
+          <div><span class="light-info">Runtime - </span><span><%= movie['runtime'] %></span></div>
+          <div><span class="light-info">Director - </span><span><%= movie['director'] %></span></div>
+          <div><span class="light-info">Writer - </span><span><%= movie['writer'] %></span></div>
+          <div><span class="light-info">Actors - </span><span><%= movie['actors'] %></span></div>
+          <div><span class="light-info">Awards - </span><span><%= movie['Awards'] %></span></div>
+          <div><span class="light-info">Metascore - </span><span><%= movie['Metascore'] %></span></div>
+          <div class="plot-info"><span><%= movie['plot'] %></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="col s4 movie-card">
+      <% if movie['poster_url'].length > 7 %>
+        <img class="display-image" src="<%= movie['poster_url'] %>" alt="No Poster">
+      <% end %>
+    </div>
+  </div>
+</div>
