@@ -1,0 +1,49 @@
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.ui-title {
+  margin: 1rem;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.ui-card {
+  margin: 1% 3%;
+  width: 19%;
+  float: left;
+  box-shadow: 1px 1px 1px #AAA;
+  border-radius: 0.2rem;
+  background-color: #DDD;
+}
+
+.x-men-title, .x-men-ability {
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.x-men-phrase-wrapper {
+  position: relative;
+}
+
+.x-men-phrase {
+  position: absolute;
+  bottom: 4rem;
+  left: 4rem;
+  text-align: center;
+  background-color: #AEADAD;
+  box-shadow: 1px 1px 2px #999;
+  visibility: hidden;
+}
+
+.ui-load-more {
+  margin: 0 auto;
+  height: 6rem;
+  width: 6rem;
+  line-height: 6rem;
+  border-radius: 50%;
+  border: 0.4rem solid green;
+  color: green;
+  text-align: center;
+}
