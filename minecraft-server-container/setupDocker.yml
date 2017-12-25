@@ -1,0 +1,98 @@
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: Ensure prior version of docker is removed
+      apt:
+        name: docker
+        state: absent
+
+    - name: Ensure prior version of docker-engine is removed
+      apt:
+        name: docker-engine
+        state: absent
+
+    - name: Obtain and store uname from system
+      shell: uname -r
+      register: uname_r_result
+
+    - name: Install extra packages ({{ uname_r_result.stdout }})
+      apt:
+        update_cache: yes
+        name: linux-image-extra-{{ uname_r_result.stdout }}
+        state: latest
+
+    - name: Install extra packages (virtual)
+      apt:
+        name: linux-image-extra-virtual
+        state: latest
+
+    - name: Install apt-transport-https package
+      apt:
+        name: apt-transport-https
+        state: latest
+
+    - name: Install ca-certificates package
+      apt:
+        name: ca-certificates
+        state: latest
+
+    - name: Install curl package
+      apt:
+        name: curl
+        state: latest
+
+    - name: Install software-properties-common package
+      apt:
+        name: software-properties-common
+        state: latest
+
+    - name: Obtain and store docker gpg
+      shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg
+      register: docker_gpg
+
+    - name: Add Docker GPG key
+      apt_key:
+        data: "{{ docker_gpg.stdout }}"
+        state: present
+
+    - name: Obtain and store lsb_release
+      shell: lsb_release -cs
+      register: lsb_release_result
+
+    - name: Setup Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ lsb_release_result.stdout }} stable
+        state: present
+
+    - name: Install Docker CE version
+      apt:
+        update_cache: yes
+        name: docker-ce
+        state: latest
+
+    - name: Obtain and store uname from system
+      shell: uname -s
+      register: uname_s_result
+
+    - name: Obtain and store uname from system
+      shell: uname -m
+      register: uname_m_result
+
+    - name: Fetch Docker Compose 1.13.0
+      get_url:
+        url: https://github.com/docker/compose/releases/download/1.13.0/docker-compose-{{ uname_s_result.stdout }}-{{ uname_m_result.stdout }}
+        dest: /usr/local/bin/docker-compose
+
+    - name: Set Docker Compose permissions
+      file:
+        path: /usr/local/bin/docker-compose
+        state: file
+        mode: 0755
+
+    - name: Obtain and store Docker Compose version information
+      shell: docker-compose --version
+      register: docker_compose_version_result
+
+    - name: Log Docker Compose version information
+      debug:
+        msg: "{{ docker_compose_version_result.stdout }}"

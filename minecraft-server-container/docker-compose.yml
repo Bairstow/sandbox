@@ -1,0 +1,35 @@
+version: '2'
+services:
+  minecraft-ftb-infinity-evolved-skyblock-server:
+    ports:
+      - "25565:25565"
+
+    volumes:
+      - /mount-data/ftb-ies-120/data:/data
+
+    environment:
+      EULA: 'TRUE'
+      TYPE: 'FTB'
+      FTB_SERVER_MOD: 'https://www.feed-the-beast.com/projects/ftb-infinity-evolved-skyblock/files/2320897'
+      DIFFICULTY: 'hard'
+      WHITELIST: 'Rocinante'
+      OPS: 'Rocinante'
+      MAX_PLAYERS: '4'
+      MAX_WORLD_SIZE: '20480'
+      ALLOW_NETHER: 'true'
+      ENABLE_COMMAND_BLOCK: 'true'
+      MAX_TICK_TIME: '30000'
+      SPAWN_ANIMALS: 'true'
+      SPAWN_MONSTERS: 'true'
+      SPAWN_NPCS: 'true'
+      VIEW_DISTANCE: '10'
+      MIN_RAM: '1G'
+      MAX_RAM: '4G'
+
+    image: itzg/minecraft-server
+
+    container_name: mc_ies_120_server
+
+    tty: true
+    stdin_open: true
+    restart: always

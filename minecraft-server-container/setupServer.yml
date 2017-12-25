@@ -1,0 +1,18 @@
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: Create mount directory structure
+      file:
+        path: /mount-data/ftb-ies-120/data
+        state: directory
+        mode: 0755
+
+    - name: Copy server compose file to host
+      copy:
+        src: ~/dev/experimental/minecraft-server-container/docker-compose.yml
+        dest: /mount-data/ftb-ies-120/docker-compose.yml
+
+    - name: Run the compose job to setup server
+      docker_service:
+        project_src: /mount-data/ftb-ies-120/
+        state: present
