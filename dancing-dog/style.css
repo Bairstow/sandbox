@@ -1,0 +1,157 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.nav {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  width: 200px;
+  text-align: center;
+  font-size: 14px;
+  color: #FFF;
+  background-color: #2C3A49;
+}
+
+.nav-header {
+  height: 24px;
+  color: #000;
+  background-color: #1BA39C;
+  line-height: 24px;
+}
+
+.nav-player {
+  height: 48px;
+  position: relative;
+}
+.player-button {
+  fill: #FFF;
+}
+.rewind-button {
+  position: absolute;
+  top: 12px;
+  left: 25px;
+}
+.play-button {
+  position: absolute;
+  top: 12px;
+  left: 78px;
+}
+.stop-button {
+  position: absolute;
+  top: 12px;
+  left: 105px;
+}
+.ffwd-button {
+  position: absolute;
+  top: 12px;
+  left: 145px;
+}
+
+.nav-dance {
+  position: relative;
+  height: 60px;
+  text-align: left;
+  padding-left: 50px;
+  line-height: 60px;
+}
+.nav-dance-toggle {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  top: 20px;
+  right: 40px;
+  background-color: white;
+}
+
+.scene {
+  position: relative;
+  margin: 160px auto;
+  padding: 10px;
+  border: 2px solid #DDD;
+  height: 424px;
+  width: 824px;
+  background-color: #EEE;
+}
+.ground {
+  position: absolute;
+  height: 160px;
+  width: 800px;
+  bottom: 10px;
+  left: 10px;
+  background-color: #6C5228;
+}
+.sky {
+  position: absolute;
+  height: 240px;
+  width: 800px;
+  top: 10px;
+  left: 10px;
+  background-color: #525252;
+}
+.building-1 {
+  position: absolute;
+  height: 80px;
+  width: 40px;
+  bottom: 170px;
+  left: 280px;
+  background-color: #6C7A89;
+}
+.building-2 {
+  position: absolute;
+  height: 60px;
+  width: 80px;
+  bottom: 170px;
+  left: 380px;
+  background-color: #6C7A89;
+}
+.windows-1 {
+  position: absolute;
+  height: 20px;
+  width: 32px;
+  left: 284px;
+  background-color: #2C3E50;
+}
+.windows-1-top {
+  bottom: 218px;
+}
+.windows-1-bottom {
+  bottom: 182px;
+}
+.windows-2 {
+  position: absolute;
+  height: 30px;
+  width: 68px;
+  bottom: 190px;
+  left: 386px;
+  background-color: #2C3E50;
+}
+.sun {
+  position: absolute;
+  height: 80px;
+  width: 80px;
+  top: 280px;
+  left: 370px;
+  background-color: #E26A6A;
+  border-radius: 50%;
+}
+.moon {
+  position: absolute;
+  height: 80px;
+  width: 80px;
+  top: 60px;
+  left: 210px;
+  background-color: #F2F1EF;
+  border-radius: 50%;
+}
+.dog-holder {
+  position: absolute;
+  left: 120px;
+}
+.dog-image {
+  position: absolute;
+  top: 140px;
+}

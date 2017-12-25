@@ -1,0 +1,223 @@
+.animate {
+  animation-duration: 20s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-delay: 0;
+  animation-play-state: paused;
+  animation-fill-mode: forwards;
+}
+.ground.animate {
+  animation-name: ground;
+}
+@keyframes ground {
+  0% {
+    background-color: #6C5228;
+  }
+  50% {
+    background-color: #48A037;
+  }
+  100% {
+    background-color: #6C5228;
+  }
+}
+.sky.animate {
+  animation-name: sky;
+}
+@keyframes sky {
+  0% {
+    background-color: #525252;
+  }
+  50% {
+    background-color: #6293E5;
+  }
+  100% {
+    background-color: #525252;
+  }
+}
+.building-1.animate {
+  animation-name: buildingOne;
+}
+@keyframes buildingOne {
+  0% {
+    left: 280px;
+    background-color: #6C7A89;
+  }
+  20% {
+    left: 280px;
+  }
+  50% {
+    left: 360px;
+    background-color: #D2D7D3;
+  }
+  80% {
+    left: 440px;
+  }
+  100% {
+    left: 440px;
+    background-color: #6C7A89;
+  }
+}
+.building-2.animate {
+  animation-name: buildingTwo;
+}
+@keyframes buildingTwo {
+  0% {
+    left: 380px;
+    background-color: #6C7A89;
+  }
+  20% {
+    left: 380px;
+  }
+  50% {
+    left: 450px;
+    background-color: #D2D7D3;
+  }
+  80% {
+    left: 520px;
+  }
+  100% {
+    left: 520px;
+    background-color: #6C7A89;
+  }
+}
+.windows-1.animate {
+  animation-name: windowsOne;
+}
+@keyframes windowsOne {
+  0% {
+    left: 284px;
+    background-color: #2C3E50;
+  }
+  20% {
+    left: 284px;
+  }
+  50% {
+    left: 364px;
+    background-color: #19B5FE;
+  }
+  60% {
+    background-color: #2AC3FE;
+  }
+  75% {
+    background-color: #E26A6A;
+  }
+  80% {
+    left: 444px;
+    background-color: #2C3E50;
+  }
+  100% {
+    left: 444px;
+    background-color: #2C3E50;
+  }
+}
+.windows-2.animate {
+  animation-name: windowsTwo;
+}
+@keyframes windowsTwo {
+  0% {
+    left: 386px;
+    background-color: #2C3E50;
+  }
+  20% {
+    left: 386px;
+  }
+  50% {
+    left: 456px;
+    background-color: #19B5FE;
+  }
+  60% {
+    background-color: #2AC3FE;
+  }
+  75% {
+    background-color: #E26A6A;
+  }
+  80% {
+    left: 526px;
+    background-color: #2C3E50;
+  }
+  100% {
+    left: 526px;
+    background-color: #2C3E50;
+  }
+}
+.sun.animate {
+  animation-name: sun;
+}
+@keyframes sun {
+  0% {
+    top: 260px;
+    background-color: #E26A6A;
+  }
+  20% {
+    top: 260px;
+    background-color: #E26A6A;
+  }
+  40% {
+    top: 60px;
+    background-color: #F4D03F;
+  }
+  60% {
+    top: 60px;
+    background-color: #F4D03F;
+  }
+  80% {
+    top: 260px;
+    background-color: #E26A6A;
+  }
+  100% {
+    top: 260px;
+    background-color: #E26A6A;
+  }
+}
+.moon.animate {
+  animation-name: moon;
+}
+@keyframes moon {
+  0% {
+    top: 60px;
+    left: 210px;
+    opacity: 1;
+  }
+  20% {
+    top: 260px;
+    left: 210px;
+    opacity: 0;
+  }
+  40% {
+    top: 260px;
+  }
+  60% {
+    top: 260px;
+  }
+  80% {
+    top: 260px;
+    left: 610px;
+    opacity: 0;
+  }
+  100% {
+    top: 60px;
+    left: 610px;
+    opacity: 1;
+  }
+}
+/*.dog-image.animate {
+  animation-name: dog;
+  animation-timing-function: steps(1);
+}
+@keyframes dog {
+  0% {
+    top: 140px;
+  }
+  20% {
+    top: 100px;
+  }
+  80% {
+    top: 100px;
+    content:url('images/dog-walk-transp.gif');
+  }
+  100% {
+    top: 140px;
+    content:url('images/dog-sleep-transp.gif');
+  }
+}*/
