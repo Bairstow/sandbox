@@ -1,0 +1,79 @@
+@import 'colors';
+
+$circleSize: 96px;
+$circleBackground: $bgPrimary;
+$circleColor: $highlightPrimary;
+$insetSize: 64px;
+$insetColor: $bgSecondary;
+$transitionLength: 1s;
+$shadowProps: 6px 6px 10px rgba(0,0,0,0.2);
+
+.radialProgressContainer {
+  margin: 0px auto;
+  width: $circleSize;
+  height: $circleSize;
+
+  background-color: $circleBackground;
+  border-radius: 50%;
+
+  .radialProgressBar {
+    .mask, .fill, .shadow {
+      width: $circleSize;
+      height: $circleSize;
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .shadow {
+      box-shadow: $shadowProps inset;
+    }
+
+    .mask, .fill {
+      backface-visibility: hidden;
+      transition: transform $transitionLength;
+    }
+
+    .mask {
+      clip: rect(0px, $circleSize, $circleSize, $circleSize/2);
+      .fill {
+        clip: rect(0px, $circleSize/2, $circleSize, 0px);
+        background-color: $circleColor;
+      }
+    }
+  }
+
+  .inset {
+    width: $insetSize;
+    height: $insetSize;
+    position: absolute;
+    margin: calc((#{$circleSize} - #{$insetSize})/2);
+
+    background-color: $insetColor;
+    border-radius: 50%;
+    box-shadow: $shadowProps;
+
+    .mainValue {
+      font-size: 20px;
+      font-weight: bold;
+      line-height: $insetSize;
+    }
+  }
+
+  $percentIncrement: calc(180deg / 100);
+  @for $i from 0 through 100 {
+    &[data-progress="#{$i}"] {
+      .radialProgressBar {
+        .mask.full, .fill {
+          transform: rotate(calc(#{$percentIncrement} * #{$i}));
+        }
+        .fill.fix {
+          transform: rotate(calc(#{$percentIncrement} * #{$i} * 2));
+        }
+      }
+    }
+  }
+
+  .secondaryValue {
+    display: none;
+  }
+}
