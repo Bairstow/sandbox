@@ -1,0 +1,37 @@
+Building ...
+java.lang.AssertionError: Assert failed: :nodejs target with :none optimizations requires a :main entry
+(not (and (= target :nodejs) (= optimizations :none) (not (contains? opts :main))))
+	at cljs.closure$check_node_target.invokeStatic(closure.clj:1955)
+	at cljs.closure$build.invokeStatic(closure.clj:2477)
+	at cljs.closure$watch$buildf__5731.invoke(closure.clj:2656)
+	at cljs.closure$watch.invokeStatic(closure.clj:2689)
+	at cljs.repl$repl_STAR_$fn__6306$fn__6311.invoke(repl.cljc:902)
+	at clojure.core$binding_conveyor_fn$fn__4676.invoke(core.clj:1938)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+
+Watching paths: /home/josh/git/cljs-quickstart/hello_world/src
+Change detected, recompiling ...
+java.lang.AssertionError: Assert failed: :nodejs target with :none optimizations requires a :main entry
+(not (and (= target :nodejs) (= optimizations :none) (not (contains? opts :main))))
+	at cljs.closure$check_node_target.invokeStatic(closure.clj:1955)
+	at cljs.closure$build.invokeStatic(closure.clj:2477)
+	at cljs.closure$watch$buildf__5731.invoke(closure.clj:2656)
+	at cljs.closure$watch.invokeStatic(closure.clj:2725)
+	at cljs.repl$repl_STAR_$fn__6306$fn__6311.invoke(repl.cljc:902)
+	at clojure.core$binding_conveyor_fn$fn__4676.invoke(core.clj:1938)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+
+Change detected, recompiling ...
+java.lang.AssertionError: Assert failed: :nodejs target with :none optimizations requires a :main entry
+(not (and (= target :nodejs) (= optimizations :none) (not (contains? opts :main))))
+	at cljs.closure$check_node_target.invokeStatic(closure.clj:1955)
+	at cljs.closure$build.invokeStatic(closure.clj:2477)
+	at cljs.closure$watch$buildf__5731.invoke(closure.clj:2656)
+	at cljs.closure$watch.invokeStatic(closure.clj:2725)
+	at cljs.repl$repl_STAR_$fn__6306$fn__6311.invoke(repl.cljc:902)
+	at clojure.core$binding_conveyor_fn$fn__4676.invoke(core.clj:1938)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+

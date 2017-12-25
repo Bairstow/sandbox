@@ -1,0 +1,1 @@
+{"version":3,"file":"\/home\/josh\/git\/cljs-quickstart\/hello_world\/out\/clojure\/browser\/repl\/preload.js","sources":["preload.cljs"],"lineCount":11,"mappings":";AAQA;;;AAGA,GAAA,OAASA;AAAT;AAAA,AAAA,AAASA,oCACP,uCAAA,vCAACC;;AAEH,AAACC","names":["clojure.browser.repl.preload\/conn","clojure.browser.repl\/connect","cljs.core\/enable-console-print!"]}
