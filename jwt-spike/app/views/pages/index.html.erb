@@ -1,0 +1,94 @@
+<div class="row">
+  <form>
+    <div class="five columns">
+      <input type="text" id="email" placeholder="Email">
+    </div>
+    <div class="five columns">
+      <input type="password" id="password" placeholder="Password">
+    </div>
+    <div class="two columns">
+      <button class="button-primary" id="loginButton" type="submit">Login</a>
+    </div>
+  </form>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <button id="resetStorageButton">Reset Storage</button>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <h3 class="u-full-width" style="text-align: center">Home</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="eight columns">
+    <h4>Check current JWT status</h4>
+  </div>
+  <div class="four columns">
+    <button id="statusButton">Check Status</button>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns" id="statusResult"></div>
+</div>
+<script>
+  $('#loginButton').on('click', function(event) {
+    // prevent form submission
+    event.preventDefault();
+
+    // collect form data and submit an ajax request
+    var settings = {
+      url: '/sessions',
+      method: 'post',
+      data: {
+        email: $('#email').val(),
+        password: $('#password').val()
+      }
+    }
+    $.ajax(settings).done(function(data) {
+      if (!data.error) {
+        console.log('JWT generated: ', data.access_token);
+        window.sessionStorage.accessToken = data.access_token;
+      } else {
+        console.log('Error: ', data.error);
+      }
+    });
+  });
+
+  $('#resetStorageButton').on('click', function(event) {
+    console.log('Resetting session storage.');
+    window.sessionStorage.removeItem('accessToken');
+  });
+
+  $('#statusButton').on('click', function(event) {
+    // if current access token in sessionStorage available generate request for time to expire
+    if (window.sessionStorage.accessToken) {
+      $('#statusResult').text('Checking time to expire for current token.');
+      var settings = {
+        xhrFields: { withCredentials: true },
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('Authorization', 'Bearer ' + window.sessionStorage.accessToken);
+        },
+        url: '/sessions/expiry',
+        method: 'get'
+      };
+      $.ajax(settings).done(function(data) {
+        if (!data.error) {
+          console.log('Time until expiry: ', data.expiry);
+          $('#statusResult').text('Token to expire in: ' + String(Math.floor(data.expiry/60)) +
+                                  ' minutes and ' + String(data.expiry%60) + ' seconds');
+        } else {
+          console.log('Error: ', data.error);
+          $('#statusResult').text(data.error);
+        }
+      });
+    } else {
+      $('#statusResult').text('No current access token being stored.');
+    }
+    // clear status text
+    window.setTimeout(function() {
+      $('#statusResult').text('');
+    }, 4000);
+  })
+</script>
