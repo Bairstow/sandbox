@@ -1,0 +1,287 @@
+@charset "utf-8";
+* {
+  /* css reset */
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+html {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  background-color: white;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  height: 100%;
+  cursor: default;
+}
+
+/* game wrap and globals */
+.wrap {
+  width: 1200px;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  margin-left: -600px;
+  background-color: #EAEFEF;
+}
+.polyBorder {
+  fill:  #343A41;
+}
+.polyLabel {
+  fill: #57616D;
+}
+.svgText {
+  fill: #FFF;
+}
+
+/* header block */
+#headBlock {
+  position: absolute;
+  width: 1200px;
+}
+#headSVG {
+  position: absolute;
+  width: 1000px;
+  height: 50px;
+}
+#headText {
+  font-size: 28px;
+}
+#headInfo {
+  position: absolute;
+  width: 1180px;
+  height: 28px;
+  background-color: #57616D;
+  color: #23272D;
+  font-weight: 300;
+  font-size: 10px;
+  text-align: right;
+  padding-top: 40px;
+  padding-right: 20px;
+}
+
+/* area dividers */
+#dividers {
+  position: absolute;
+  width: 1200px;
+  height: 100%;
+}
+#divNavShadow {
+  position: absolute;
+  width: 280px;
+  height: 536px;
+  top: 84px;
+  left: 50%;
+  margin-left: -586px;
+  background-color: #788;
+}
+#divNav {
+  position: absolute;
+  width: 280px;
+  height: 536px;
+  top: 80px;
+  left: 50%;
+  margin-left: -590px;
+  background-color: #C2C9C9;
+}
+#divCurr {
+  position: absolute;
+  width: 890px;
+  height: 536px;
+  top: 80px;
+  left: 50%;
+  margin-left: -300px;
+  background-color: #E2E6EC;
+}
+#divProg {
+  position: absolute;
+  width: 1180px;
+  height: 320px;
+  top: 626px;
+  left: 50%;
+  margin-left: -590px;
+  background-color: #E2ECE6;
+}
+
+/* tabs block */
+#tabsBlock {
+  position: absolute;
+  top: 90px;
+}
+.tab {
+  margin-top: 10px;
+  margin-left: 20px;
+  height: 40px;
+}
+.tabSVG {
+  width: 260px;
+  height: 40px;
+}
+.tabG:hover .polyLabel{
+  fill: #9FA5A5;
+  -webkit-transition: .3s;
+  -moz-transition: .3s;
+  transition: .3s;
+}
+#tabsMessageDiv {
+  position: absolute;
+  width: 260px;
+  height: 256px;
+  top: 190px;
+  left: 20px;
+}
+#tabsQuickUpgradeDiv {
+  position: absolute;
+  width: 260px;
+  height: 40px;
+  top: 466px;
+  left: 20px;
+}
+
+/* lab block */
+#labBlock {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  margin-left: -280px;
+}
+#labSVG {
+  width: 424px;
+  height: 496px;
+}
+.labSVGText {
+  font-size: 20px;
+}
+#labTable {
+  position: absolute;
+  top: 48px;
+  left: 12px;
+  table-layout: fixed;
+  border-spacing: 0px;
+}
+
+/* pill block */
+#pillBlock {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  margin-left: 164px;
+}
+#pillBasic {
+  position: absolute;
+  width: 406px;
+  height: 304px;
+}
+#pillSynth {
+  position: absolute;
+  width: 406px;
+  height:112px;
+  top: 324px;
+}
+.pillSynthHolder {
+  fill: none;
+  stroke: #343A41;
+  stroke-width: 4px;
+}
+#pillHover {
+  position: absolute;
+  width: 406px;
+  height: 40px;
+  top: 456px;
+}
+
+/* research block */
+#researchBlock {
+  position: absolute;
+  top: 626px;
+  width: 600px;
+  left: 50%;
+  margin-left: -600px;
+}
+#researchHolderDiv {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  width: 560px;
+  height: 280px;
+}
+#researchDisplay {
+  position: absolute;
+  color: #343A41;
+  width: 240px;
+  height: 240px;
+  top: 70px;
+  left: 48px;
+}
+.researchArc {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  border-style: solid;
+}
+#researchArcBase {
+  margin: 9px;
+  border-width: 1px;
+  border-color: #9FA5A5;
+}
+#researchArcStart {
+  margin: 4px;
+  border-width: 6px;
+  border-radius: 100%;
+}
+
+#researchArcEnd {
+  margin: 4px;
+  border-width: 6px;
+  border-radius: 100%;
+}
+#researchPerSecond {
+  position: absolute;
+  width: 150px;
+  top: 50px;
+  text-align: right;
+  color: #9FA5A5;
+}
+#researchProgress {
+  position: absolute;
+  width: 150px;
+  font-size: 30px;
+  top: 90px;
+  text-align: right;
+}
+#researchAbsProgress {
+  position: absolute;
+  width: 120px;
+  top: 140px;
+  left: 50px;
+  text-align: center;
+  color: #9FA5A5;
+}
+#researchSelectHolder {
+  position: absolute;
+  width: 300px;
+  height: 220px;
+  top: 68px;
+  left: 278px;
+}
+
+/* economy block */
+#economyBlock {
+  position: absolute;
+  top: 626px;
+  width: 600px;
+  left: 50%;
+}
+#economyHolderDiv {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  width: 560px;
+  height: 280px;
+}
