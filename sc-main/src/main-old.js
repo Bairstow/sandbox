@@ -19,7 +19,7 @@ module.exports.loop = () => {
   const executorsOn20 = [
     {
       executor: source.assessor,
-      arguments: ['W17S32'],
+      arguments: ['W45N31'],
     },
     {
       executor: memory.manager,
