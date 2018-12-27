@@ -159,11 +159,12 @@ var basicCreepDef = [WORK, CARRY, MOVE];
 var constructCreep = exports.constructCreep = function constructCreep(state) {
   var creepNames = Object.keys(Game.creeps);
   if (creepNames.length === 0) {
+    var roomSources = state.originalRoom.find(FIND_SOURCES);
     var creepName = state.originalSpawn.createCreep(basicCreepDef, undefined, // undefined argument auto-generates creep name
     {
       role: 'harvester',
-      active: false,
-      sourceId: null
+      mode: 'harvest',
+      sourceId: roomSources[0].id
     });
     console.log('Creating harvester creep: ' + creepName);
   }
@@ -179,42 +180,84 @@ var constructCreep = exports.constructCreep = function constructCreep(state) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.operateCreep = operateCreep;
+function setHarvesterMode(creep) {
+  var mode = creep.memory.mode;
+
+  var shouldToggleHarvest = mode === 'distribute' && creep.carry.energy === 0;
+  var shouldToggleDistribute = mode === 'harvest' && creep.carry.energy === creep.carryCapacity;
+  if (shouldToggleHarvest) {
+    creep.memory.mode = 'harvest';
+    creep.say('Harvest');
+  }
+  if (shouldToggleDistribute) {
+    creep.memory.mode = 'distribute';
+    creep.say('Distribute');
+  }
+}
+
+function creepHarvest(creep, state) {
+  var sourceId = creep.memory.sourceId;
+
+  var source = Game.getObjectById(sourceId);
+  if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
+    creep.moveTo(source);
+  }
+}
+
+function creepDistribute(creep, state) {
+  var room = state.originalRoom;
+  var roomController = creep.room.controller;
+  var storageLocations = room.find(FIND_STRUCTURES, {
+    filter: function filter(structure) {
+      var isExtension = structure.structureType === STRUCTURE_EXTENSION;
+      var isSpawn = structure.structureType === STRUCTURE_SPAWN;
+      var isTower = structure.structureType === STRUCTURE_TOWER;
+      var isStorageStructure = isExtension || isSpawn || isTower;
+      return isStorageStructure && structure.energy < structure.energyCapacity;
+    }
+  });
+  if (storageLocations.length) {
+    if (creep.transfer(storageLocations[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(storageLocations[0]);
+    }
+  } else {
+    if (creep.upgradeController(roomController) == ERR_NOT_IN_RANGE) {
+      creep.moveTo(roomController);
+    }
+  }
+}
+
+var harvesterModeOperations = {
+  harvest: creepHarvest,
+  distribute: creepDistribute
+};
+
+function operateHarvester(creep, state) {
+  if (!creep) return;
+  setHarvesterMode(creep);
+  var mode = creep.memory.mode;
+
+  harvesterModeOperations[mode](creep, state);
+}
+
+function operateBuilder(creep, state) {}
+
+function operateDefender(creep, state) {}
+
 var roleOperations = {
   harvester: operateHarvester,
   builder: operateBuilder,
   defender: operateDefender
 };
 
-var operateCreep = exports.operateCreep = function operateCreep(state) {
-  if (!Memory.creeps) return;
+function operateCreep(state) {
+  if (!Game.creeps) return;
   for (var name in Game.creeps) {
-    var creepObject = Game.creeps[name];
-    var creepMemory = Memory.creeps[name];
-    var role = creepMemory.role;
-
-    roleOperations[role](creepObject, creepMemory, state);
-  }
-};
-
-function operateHarvester(creepObject, creepMemory, state) {
-  var active = creepMemory.active,
-      sourceId = creepMemory.sourceId;
-
-  var sources = creepObject.room.find(FIND_SOURCES);
-  if (creepObject.carry.energy < creepObject.carryCapacity) {
-    if (creepObject.harvest(sources[0]) === ERR_NOT_IN_RANGE) {
-      creepObject.moveTo(sources[0]);
-    }
-  } else {
-    if (creepObject.transfer(state.originalSpawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-      creepObject.moveTo(state.originalSpawn);
-    }
+    var creep = Game.creeps[name];
+    roleOperations[creep.memory.role](creep, state);
   }
 }
-
-function operateBuilder(creepObject, creepMemory, state) {}
-
-function operateDefender(creepObject, creepMemory, state) {}
 
 /***/ }),
 /* 5 */
@@ -232,7 +275,8 @@ var tickMultipleOf = exports.tickMultipleOf = function tickMultipleOf(tickCount)
 
 var constructInitialState = exports.constructInitialState = function constructInitialState() {
   return {
-    originalSpawn: Game.spawns['Spawn01']
+    originalSpawn: Game.spawns['Spawn1'],
+    originalRoom: Game.rooms['sim']
   };
 };
 
