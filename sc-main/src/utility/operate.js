@@ -1,4 +1,4 @@
-export const operateCreep = () => {
+export const operateCreep = spawn => {
   for (const name in Game.creeps) {
     const currentCreep = Game.creeps[name];
     const sources = currentCreep.room.find(FIND_SOURCES);
@@ -7,8 +7,8 @@ export const operateCreep = () => {
         currentCreep.moveTo(sources[0]);
       }
     } else {
-      if (currentCreep.transfer(currentSpawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-        currentCreep.moveTo(currentSpawn);
+      if (currentCreep.transfer(spawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+        currentCreep.moveTo(spawn);
       }
     }
   }

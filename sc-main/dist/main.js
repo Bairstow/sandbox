@@ -94,7 +94,7 @@ var loop = function loop() {
   var executorsOn10 = [];
   // 1 tick creep operation and management
   var executeOn1 = (0, _game.executeByTickCount)(1);
-  var executorsOn1 = [(0, _general.createExecutionDefinition)(_operate.operateCreep)];
+  var executorsOn1 = [(0, _general.createExecutionDefinition)(_operate.operateCreep, currentSpawn)];
 
   executeOn100(executorsOn100);
   executeOn10(executorsOn10);
@@ -129,9 +129,6 @@ var executeByTickCount = exports.executeByTickCount = function executeByTickCoun
         var executor = data.executor,
             restArgs = data.restArgs;
 
-        for (var name in restArgs) {
-          console.log('Argument: ', name);
-        }
         executor.apply(undefined, _toConsumableArray(restArgs));
       });
     }
@@ -232,7 +229,7 @@ var createExecutionDefinition = exports.createExecutionDefinition = function cre
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var operateCreep = exports.operateCreep = function operateCreep() {
+var operateCreep = exports.operateCreep = function operateCreep(spawn) {
   for (var name in Game.creeps) {
     var currentCreep = Game.creeps[name];
     var sources = currentCreep.room.find(FIND_SOURCES);
@@ -241,8 +238,8 @@ var operateCreep = exports.operateCreep = function operateCreep() {
         currentCreep.moveTo(sources[0]);
       }
     } else {
-      if (currentCreep.transfer(currentSpawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-        currentCreep.moveTo(currentSpawn);
+      if (currentCreep.transfer(spawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+        currentCreep.moveTo(spawn);
       }
     }
   }

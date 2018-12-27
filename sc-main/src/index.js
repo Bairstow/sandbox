@@ -17,7 +17,7 @@ const loop = () => {
   const executorsOn10 = [];
   // 1 tick creep operation and management
   const executeOn1 = executeByTickCount(1);
-  const executorsOn1 = [createExecutionDefinition(operateCreep)];
+  const executorsOn1 = [createExecutionDefinition(operateCreep, currentSpawn)];
 
   executeOn100(executorsOn100);
   executeOn10(executorsOn10);
