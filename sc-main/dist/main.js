@@ -118,7 +118,7 @@ var executionConfig = exports.executionConfig = [{
 */
 {
   module: _construct.constructCreep,
-  interval: 50
+  interval: 20
 }, {
   module: _operate.operateCreep,
   interval: 1
@@ -273,10 +273,12 @@ var tickMultipleOf = exports.tickMultipleOf = function tickMultipleOf(tickCount)
   return Game.time % tickCount == 0 ? true : false;
 };
 
+var originalSpawn = Game.spawns['Spawn1'];
+
 var constructInitialState = exports.constructInitialState = function constructInitialState() {
   return {
-    originalSpawn: Game.spawns['Spawn1'],
-    originalRoom: Game.rooms['sim']
+    originalSpawn: originalSpawn,
+    originalRoom: originalSpawn.room
   };
 };
 
