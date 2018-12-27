@@ -1,7 +1,7 @@
+const basicCreepDef = [WORK, CARRY, MOVE];
+
 const constructor = spawn => {
-  if (!Memory.creeps) return;
-  const creepNames = Object.keys(Memory.creeps);
-  const basicCreepDef = [WORK, CARRY, MOVE];
+  const creepNames = Object.keys(Game.creeps);
 
   if (creepNames.length === 0) {
     const creepName = spawn.createCreep(
