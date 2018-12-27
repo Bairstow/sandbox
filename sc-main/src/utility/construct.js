@@ -1,8 +1,7 @@
 const basicCreepDef = [WORK, CARRY, MOVE];
 
-const constructor = spawn => {
+export const constructCreep = spawn => {
   const creepNames = Object.keys(Game.creeps);
-
   if (creepNames.length === 0) {
     const creepName = spawn.createCreep(
       basicCreepDef,
@@ -15,8 +14,4 @@ const constructor = spawn => {
     );
     console.log(`Creating harvester creep: ${creepName}`);
   }
-};
-
-module.exports = {
-  constructor,
 };
