@@ -70,35 +70,17 @@
 "use strict";
 
 
-var _general = __webpack_require__(6);
+var _config = __webpack_require__(1);
 
-var _state = __webpack_require__(4);
+var _game = __webpack_require__(5);
 
-var _game = __webpack_require__(1);
-
-var _memory = __webpack_require__(2);
-
-var _construct = __webpack_require__(5);
-
-var _operate = __webpack_require__(7);
-
+var state = (0, _game.constructInitialState)();
 var loop = function loop() {
-  var currentSpawn = Game.spawns['Spawn01'];
-  // TODO: pseudo execute loop
-  // 100 tick planning and structure
-  // - memory cleanup
-  var executeOn100 = (0, _game.executeByTickCount)(100);
-  var executorsOn100 = [(0, _general.createExecutionDefinition)(_memory.cleanupCreep), (0, _general.createExecutionDefinition)(_state.assess), (0, _general.createExecutionDefinition)(_construct.constructCreep, currentSpawn)];
-  // 10 tick health check and threat assessment
-  var executeOn10 = (0, _game.executeByTickCount)(10);
-  var executorsOn10 = [];
-  // 1 tick creep operation and management
-  var executeOn1 = (0, _game.executeByTickCount)(1);
-  var executorsOn1 = [(0, _general.createExecutionDefinition)(_operate.operateCreep, currentSpawn)];
-
-  executeOn100(executorsOn100);
-  executeOn10(executorsOn10);
-  executeOn1(executorsOn1);
+  _config.executionConfig.map(function (datum) {
+    if ((0, _game.tickMultipleOf)(datum.interval)) {
+      datum.module(state);
+    }
+  });
 };
 
 module.exports = {
@@ -115,25 +97,32 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.executionConfig = undefined;
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+var _memory = __webpack_require__(2);
 
-var tickMultipleOf = function tickMultipleOf(tickCount) {
-  return Game.time % tickCount == 0 ? true : false;
-};
+var _construct = __webpack_require__(3);
 
-var executeByTickCount = exports.executeByTickCount = function executeByTickCount(tickCount) {
-  return function (executors) {
-    if (tickMultipleOf(tickCount)) {
-      executors.forEach(function (data) {
-        var executor = data.executor,
-            restArgs = data.restArgs;
+var _operate = __webpack_require__(4);
 
-        executor.apply(undefined, _toConsumableArray(restArgs));
-      });
-    }
-  };
-};
+// import { assess } from './module/state';
+var executionConfig = exports.executionConfig = [{
+  module: _memory.cleanupCreep,
+  interval: 200
+},
+/*
+{
+  module: assess,
+  interval: 100,
+},
+*/
+{
+  module: _construct.constructCreep,
+  interval: 50
+}, {
+  module: _operate.operateCreep,
+  interval: 1
+}];
 
 /***/ }),
 /* 2 */
@@ -156,7 +145,31 @@ var cleanupCreep = exports.cleanupCreep = function cleanupCreep() {
 };
 
 /***/ }),
-/* 3 */,
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var basicCreepDef = [WORK, CARRY, MOVE];
+
+var constructCreep = exports.constructCreep = function constructCreep(state) {
+  var creepNames = Object.keys(Game.creeps);
+  if (creepNames.length === 0) {
+    var creepName = state.originalSpawn.createCreep(basicCreepDef, undefined, // undefined argument auto-generates creep name
+    {
+      role: 'harvester',
+      active: false,
+      sourceId: null
+    });
+    console.log('Creating harvester creep: ' + creepName);
+  }
+};
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -166,12 +179,42 @@ var cleanupCreep = exports.cleanupCreep = function cleanupCreep() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var assess = exports.assess = function assess() {
-  for (var name in Game.rooms) {
-    console.log('Found room: ', name);
-  }
-  return null;
+var roleOperations = {
+  harvester: operateHarvester,
+  builder: operateBuilder,
+  defender: operateDefender
 };
+
+var operateCreep = exports.operateCreep = function operateCreep(state) {
+  if (!Memory.creeps) return;
+  for (var name in Game.creeps) {
+    var creepObject = Game.creeps[name];
+    var creepMemory = Memory.creeps[name];
+    var role = creepMemory.role;
+
+    roleOperations[role](creepObject, creepMemory, state);
+  }
+};
+
+function operateHarvester(creepObject, creepMemory, state) {
+  var active = creepMemory.active,
+      sourceId = creepMemory.sourceId;
+
+  var sources = creepObject.room.find(FIND_SOURCES);
+  if (creepObject.carry.energy < creepObject.carryCapacity) {
+    if (creepObject.harvest(sources[0]) === ERR_NOT_IN_RANGE) {
+      creepObject.moveTo(sources[0]);
+    }
+  } else {
+    if (creepObject.transfer(state.originalSpawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+      creepObject.moveTo(state.originalSpawn);
+    }
+  }
+}
+
+function operateBuilder(creepObject, creepMemory, state) {}
+
+function operateDefender(creepObject, creepMemory, state) {}
 
 /***/ }),
 /* 5 */
@@ -183,66 +226,14 @@ var assess = exports.assess = function assess() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var basicCreepDef = [WORK, CARRY, MOVE];
-
-var constructCreep = exports.constructCreep = function constructCreep(spawn) {
-  var creepNames = Object.keys(Game.creeps);
-  if (creepNames.length === 0) {
-    var creepName = spawn.createCreep(basicCreepDef, undefined, // undefined argument auto-generates creep name
-    {
-      role: 'harvester',
-      active: false,
-      sourceId: null
-    });
-    console.log('Creating harvester creep: ' + creepName);
-  }
+var tickMultipleOf = exports.tickMultipleOf = function tickMultipleOf(tickCount) {
+  return Game.time % tickCount == 0 ? true : false;
 };
 
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createExecutionDefinition = exports.createExecutionDefinition = function createExecutionDefinition(executor) {
-  for (var _len = arguments.length, rest = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    rest[_key - 1] = arguments[_key];
-  }
-
+var constructInitialState = exports.constructInitialState = function constructInitialState() {
   return {
-    executor: executor,
-    restArgs: rest
+    originalSpawn: Game.spawns['Spawn01']
   };
-};
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var operateCreep = exports.operateCreep = function operateCreep(spawn) {
-  for (var name in Game.creeps) {
-    var currentCreep = Game.creeps[name];
-    var sources = currentCreep.room.find(FIND_SOURCES);
-    if (currentCreep.carry.energy < currentCreep.carryCapacity) {
-      if (currentCreep.harvest(sources[0]) === ERR_NOT_IN_RANGE) {
-        currentCreep.moveTo(sources[0]);
-      }
-    } else {
-      if (currentCreep.transfer(spawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-        currentCreep.moveTo(spawn);
-      }
-    }
-  }
 };
 
 /***/ })
