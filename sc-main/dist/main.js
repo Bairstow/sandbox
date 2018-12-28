@@ -154,13 +154,42 @@ var cleanupCreep = exports.cleanupCreep = function cleanupCreep() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.constructCreep = constructCreep;
 var basicCreepDef = [WORK, CARRY, MOVE];
+var partDefinitions = {
+  TOUGH: { cost: 10, value: TOUGH },
+  MOVE: { cost: 50, value: MOVE },
+  WORK: { cost: 100, value: WORK },
+  CARRY: { cost: 50, value: CARRY },
+  ATTACK: { cost: 80, value: ATTACK },
+  RANGED: { cost: 150, value: RANGED_ATTACK },
+  HEAL: { cost: 250, value: HEAL }
+};
 
-var constructCreep = exports.constructCreep = function constructCreep(state) {
+var harvesterPartRatio = [partDefinitions.WORK, partDefinitions.CARRY, partDefinitions.MOVE, partDefinitions.CARRY, partDefinitions.MOVE];
+
+var calculateEnergyAvailable = function calculateEnergyAvailable(state) {
+  return state.originalRoom.energyAvailable;
+};
+
+function generateCreepPartDefinition(energyAvailable, parts) {
+  var energyUsed = 0;
+  return parts.reduce(function (result, part) {
+    energyUsed = energyUsed + part.cost;
+    if (energyUsed < energyAvailable) {
+      result.push(part.value);
+    }
+    return result;
+  }, []);
+}
+
+function constructCreep(state) {
   var creepNames = Object.keys(Game.creeps);
   if (creepNames.length === 0) {
+    var energyAvailable = calculateEnergyAvailable(state);
+    var creepPartDefinition = generateCreepPartDefinition(energyAvailable, harvesterPartRatio);
     var roomSources = state.originalRoom.find(FIND_SOURCES);
-    var creepName = state.originalSpawn.createCreep(basicCreepDef, undefined, // undefined argument auto-generates creep name
+    var creepName = state.originalSpawn.createCreep(creepPartDefinition, undefined, // undefined argument auto-generates creep name
     {
       role: 'harvester',
       mode: 'harvest',
@@ -168,6 +197,33 @@ var constructCreep = exports.constructCreep = function constructCreep(state) {
     });
     console.log('Creating harvester creep: ' + creepName);
   }
+}
+
+var generateCreepDefinitionForEnergy = function generateCreepDefinitionForEnergy(energyAvailable) {
+  var costDefinition = function costDefinition(definition) {
+    return definition.reduce(function (sum, part) {
+      return sum + part.cost;
+    }, 0);
+  };
+  var canCreepBeBuilt = function canCreepBeBuilt(definition, energyAvailable) {
+    return costDefinition(definition) <= energyAvailable;
+  };
+  var result = [];
+  var creepBuildable = canCreepBeBuilt(result, energyAvailable);
+  var definitionIndex = 0;
+  while (creepBuildable) {
+    result.push(baseDefinition[definitionIndex]);
+    creepBuildable = canCreepBeBuilt(result, energyAvailable);
+    definitionIndex += 1;
+    if (definitionIndex === baseDefinition.length) {
+      definitionIndex = 0;
+    }
+  }
+  result.pop();
+  console.log('Generated creep definition with ' + result.length + ' parts');
+  return result.map(function (part) {
+    return part.value;
+  });
 };
 
 /***/ }),
