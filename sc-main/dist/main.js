@@ -118,7 +118,7 @@ var executionConfig = exports.executionConfig = [{
 */
 {
   module: _construct.constructCreep,
-  interval: 20
+  interval: 50
 }, {
   module: _operate.operateCreep,
   interval: 1
@@ -155,7 +155,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.constructCreep = constructCreep;
-var basicCreepDef = [WORK, CARRY, MOVE];
 var partDefinitions = {
   TOUGH: { cost: 10, value: TOUGH },
   MOVE: { cost: 50, value: MOVE },
@@ -170,6 +169,10 @@ var harvesterPartRatio = [partDefinitions.WORK, partDefinitions.CARRY, partDefin
 
 var calculateEnergyAvailable = function calculateEnergyAvailable(state) {
   return state.originalRoom.energyAvailable;
+};
+
+var calculateEnergyCapacityAvailable = function calculateEnergyCapacityAvailable(state) {
+  return state.originalRoom.energyCapacityAvailable;
 };
 
 function generateCreepPartDefinition(energyAvailable, parts) {
@@ -202,7 +205,15 @@ function findUnharvestedSourceId(state) {
 function constructCreep(state) {
   var unharvestedSourceId = findUnharvestedSourceId(state);
   var energyAvailable = calculateEnergyAvailable(state);
-  if (!!unharvestedSourceId && energyAvailable >= 300) {
+  var energyCapacityAvailable = calculateEnergyCapacityAvailable(state);
+  var harvesterCount = 0;
+  for (var name in Game.creeps) {
+    if (Game.creeps[name].memory.role) harvesterCount++;
+  }
+  var shouldCreateFirstHarvester = harvesterCount === 0 && energyAvailable >= 300;
+  var shouldCreateRestHarvester = harvesterCount > 0 && energyCapacityAvailable === energyAvailable;
+  var shouldCreateHarvester = !!unharvestedSourceId && shouldCreateFirstHarvester;
+  if (shouldCreateHarvester) {
     var creepPartDefinition = generateCreepPartDefinition(energyAvailable, harvesterPartRatio);
     var creepName = state.originalSpawn.createCreep(creepPartDefinition, undefined, // undefined argument auto-generates creep name
     {

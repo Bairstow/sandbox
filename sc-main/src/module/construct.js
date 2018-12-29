@@ -1,4 +1,3 @@
-const basicCreepDef = [WORK, CARRY, MOVE];
 const partDefinitions = {
   TOUGH: { cost: 10, value: TOUGH },
   MOVE: { cost: 50, value: MOVE },
@@ -13,6 +12,10 @@ const harvesterPartRatio = [partDefinitions.WORK, partDefinitions.CARRY, partDef
 
 const calculateEnergyAvailable = state => {
   return state.originalRoom.energyAvailable;
+};
+
+const calculateEnergyCapacityAvailable = state => {
+  return state.originalRoom.energyCapacityAvailable;
 };
 
 function generateCreepPartDefinition(energyAvailable, parts) {
@@ -45,7 +48,15 @@ function findUnharvestedSourceId(state) {
 export function constructCreep(state) {
   const unharvestedSourceId = findUnharvestedSourceId(state);
   const energyAvailable = calculateEnergyAvailable(state);
-  if (!!unharvestedSourceId && energyAvailable >= 300) {
+  const energyCapacityAvailable = calculateEnergyCapacityAvailable(state);
+  let harvesterCount = 0;
+  for (const name in Game.creeps) {
+    if (Game.creeps[name].memory.role) harvesterCount++;
+  }
+  const shouldCreateFirstHarvester = harvesterCount === 0 && energyAvailable >= 300;
+  const shouldCreateRestHarvester = harvesterCount > 0 && energyCapacityAvailable === energyAvailable;
+  const shouldCreateHarvester = !!unharvestedSourceId && shouldCreateFirstHarvester;
+  if (shouldCreateHarvester) {
     const creepPartDefinition = generateCreepPartDefinition(energyAvailable, harvesterPartRatio);
     const creepName = state.originalSpawn.createCreep(
       creepPartDefinition,

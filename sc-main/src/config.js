@@ -16,7 +16,7 @@ export const executionConfig = [
   */
   {
     module: constructCreep,
-    interval: 20,
+    interval: 50,
   },
   {
     module: operateCreep,
