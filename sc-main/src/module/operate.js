@@ -51,11 +51,59 @@ const harvesterModeOperations = {
 function operateHarvester(creep, state) {
   if (!creep) return;
   setHarvesterMode(creep);
-  const { mode } = creep.memory;
-  harvesterModeOperations[mode](creep, state);
+  harvesterModeOperations[creep.memory.mode](creep, state);
 }
 
-function operateBuilder(creep, state) {}
+function setBuilderMode(creep) {
+  const { mode } = creep.memory;
+  const shouldToggleHarvest = mode === 'build' && creep.carry.energy === 0;
+  const shouldToggleBuild = mode === 'harvest' && creep.carry.energy === creep.carryCapacity;
+  if (shouldToggleHarvest) {
+    creep.memory.mode = 'harvest';
+    creep.say('Harvest');
+  }
+  if (shouldToggleBuild) {
+    creep.memory.mode = 'build';
+    creep.say('Build');
+  }
+}
+
+const builderModeOperations = {
+  harvest: creepHarvest,
+  build: creepBuild,
+};
+
+function creepBuild(creep, state) {
+  const room = state.originalRoom;
+  const constructionSites = room.find(FIND_CONSTRUCTION_SITES);
+  const repairTargets = room.find(FIND_STRUCTURES, {
+    filter: structure => structure.hits < structure.hitsMax,
+  });
+  if (constructionSites.length) {
+    if (creep.build(constructionSites[0]) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(constructionSites[0]);
+    }
+  } else if (repairTargets.length) {
+    const weakestStructure = repairTargets.reduce((result, current) => {
+      if (current.hits < result.hits) {
+        return current;
+      } else {
+        return result;
+      }
+    }, repairTargets[0]);
+    if (creep.repair(weakestStructure) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(weakestStructure);
+    }
+  } else {
+    creep.moveTo(spawn);
+  }
+}
+
+function operateBuilder(creep, state) {
+  if (!creep) return;
+  setBuilderMode(creep);
+  builderModeOperations[creep.memory.mode](creep, state);
+}
 
 function operateDefender(creep, state) {}
 

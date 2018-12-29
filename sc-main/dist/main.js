@@ -166,14 +166,15 @@ var partDefinitions = {
 };
 
 var harvesterPartRatio = [partDefinitions.WORK, partDefinitions.CARRY, partDefinitions.MOVE, partDefinitions.CARRY, partDefinitions.MOVE];
+var builderPartRatio = [partDefinitions.WORK, partDefinitions.WORK, partDefinitions.CARRY, partDefinitions.MOVE];
 
-var calculateEnergyAvailable = function calculateEnergyAvailable(state) {
+function calculateEnergyAvailable(state) {
   return state.originalRoom.energyAvailable;
-};
+}
 
-var calculateEnergyCapacityAvailable = function calculateEnergyCapacityAvailable(state) {
+function calculateEnergyCapacityAvailable(state) {
   return state.originalRoom.energyCapacityAvailable;
-};
+}
 
 function generateCreepPartDefinition(energyAvailable, parts) {
   var energyUsed = 0;
@@ -186,42 +187,84 @@ function generateCreepPartDefinition(energyAvailable, parts) {
   }, []);
 }
 
-function findUnharvestedSourceId(state) {
+function findUnutilisedSourceIdByRole(state, role) {
   var roomSources = state.originalRoom.find(FIND_SOURCES);
   var creepSourceIds = Object.keys(Game.creeps).reduce(function (result, name) {
     var creep = Game.creeps[name];
-    if (!!creep.memory.sourceId) {
+    var isRoleType = creep.memory.role === role;
+    var hasSourceId = !!creep.memory.sourceId;
+    if (isRoleType && hasSourceId) {
       result.push(creep.memory.sourceId);
     }
     return result;
   }, []);
-  var unharvestedSourceLabels = Object.keys(roomSources).filter(function (sourceLabel) {
+  var unutilisedSourceLabels = Object.keys(roomSources).filter(function (sourceLabel) {
     var sourceId = roomSources[sourceLabel].id;
     return !creepSourceIds.includes(sourceId);
   });
-  return unharvestedSourceLabels.length > 0 ? roomSources[unharvestedSourceLabels[0]].id : null;
+  return unutilisedSourceLabels.length > 0 ? roomSources[unutilisedSourceLabels[0]].id : null;
+}
+
+function createCreep(state, partDefinition, memoryDefinition) {
+  var creepName = state.originalSpawn.createCreep(partDefinition, undefined, // undefined argument auto-generates creep name
+  memoryDefinition);
+  console.log('Creating harvester creep: ' + creepName);
+}
+
+function fetchCreepsByRole(role) {
+  return Object.keys(Game.creeps).reduce(function (result, name) {
+    var creep = Game.creeps[name];
+    if (creep.memory.role === role) {
+      result.push(creep);
+    }
+    return result;
+  }, []);
+}
+
+function calculateHarvesterSourceId(state) {
+  var unharvestedSourceId = findUnutilisedSourceIdByRole(state, 'harvester');
+  if (!!unharvestedSourceId) {
+    var energyAvailable = calculateEnergyAvailable(state);
+    var energyCapacityAvailable = calculateEnergyCapacityAvailable(state);
+    var harvesterCreeps = fetchCreepsByRole('harvester');
+    var harvesterCount = harvesterCreeps.length;
+    var shouldCreateFirstHarvester = harvesterCount === 0 && energyAvailable >= 300;
+    var shouldCreateRestHarvester = harvesterCount > 0 && energyCapacityAvailable === energyAvailable;
+    return (shouldCreateFirstHarvester || shouldCreateRestHarvester) && unharvestedSourceId;
+  }
+  return false;
+}
+
+function calculateBuilderSourceId(state) {
+  var unharvestedSourceId = findUnutilisedSourceIdByRole(state, 'builder');
+  if (!!unharvestedSourceId) {
+    var energyAvailable = calculateEnergyAvailable(state);
+    var energyCapacityAvailable = calculateEnergyCapacityAvailable(state);
+    return energyCapacityAvailable === energyAvailable && unharvestedSourceId;
+  }
+  return false;
 }
 
 function constructCreep(state) {
-  var unharvestedSourceId = findUnharvestedSourceId(state);
   var energyAvailable = calculateEnergyAvailable(state);
-  var energyCapacityAvailable = calculateEnergyCapacityAvailable(state);
-  var harvesterCount = 0;
-  for (var name in Game.creeps) {
-    if (Game.creeps[name].memory.role) harvesterCount++;
-  }
-  var shouldCreateFirstHarvester = harvesterCount === 0 && energyAvailable >= 300;
-  var shouldCreateRestHarvester = harvesterCount > 0 && energyCapacityAvailable === energyAvailable;
-  var shouldCreateHarvester = !!unharvestedSourceId && (shouldCreateFirstHarvester || shouldCreateRestHarvester);
-  if (shouldCreateHarvester) {
+  var harvesterSourceId = calculateHarvesterSourceId(state);
+  var builderSourceId = calculateBuilderSourceId(state);
+  if (!!harvesterSourceId) {
     var creepPartDefinition = generateCreepPartDefinition(energyAvailable, harvesterPartRatio);
-    var creepName = state.originalSpawn.createCreep(creepPartDefinition, undefined, // undefined argument auto-generates creep name
-    {
+    var creepMemoryDefinition = {
       role: 'harvester',
       mode: 'harvest',
-      sourceId: unharvestedSourceId
-    });
-    console.log('Creating harvester creep: ' + creepName);
+      sourceId: harvesterSourceId
+    };
+    createCreep(state, creepPartDefinition, creepMemoryDefinition);
+  } else if (!!builderSourceId) {
+    var _creepPartDefinition = generateCreepPartDefinition(energyAvailable, builderPartRatio);
+    var _creepMemoryDefinition = {
+      role: 'builder',
+      mode: 'harvest',
+      sourceId: builderSourceId
+    };
+    createCreep(state, _creepPartDefinition, _creepMemoryDefinition);
   }
 }
 
@@ -291,12 +334,62 @@ var harvesterModeOperations = {
 function operateHarvester(creep, state) {
   if (!creep) return;
   setHarvesterMode(creep);
-  var mode = creep.memory.mode;
-
-  harvesterModeOperations[mode](creep, state);
+  harvesterModeOperations[creep.memory.mode](creep, state);
 }
 
-function operateBuilder(creep, state) {}
+function setBuilderMode(creep) {
+  var mode = creep.memory.mode;
+
+  var shouldToggleHarvest = mode === 'build' && creep.carry.energy === 0;
+  var shouldToggleBuild = mode === 'harvest' && creep.carry.energy === creep.carryCapacity;
+  if (shouldToggleHarvest) {
+    creep.memory.mode = 'harvest';
+    creep.say('Harvest');
+  }
+  if (shouldToggleBuild) {
+    creep.memory.mode = 'build';
+    creep.say('Build');
+  }
+}
+
+var builderModeOperations = {
+  harvest: creepHarvest,
+  build: creepBuild
+};
+
+function creepBuild(creep, state) {
+  var room = state.originalRoom;
+  var constructionSites = room.find(FIND_CONSTRUCTION_SITES);
+  var repairTargets = room.find(FIND_STRUCTURES, {
+    filter: function filter(structure) {
+      return structure.hits < structure.hitsMax;
+    }
+  });
+  if (constructionSites.length) {
+    if (creep.build(constructionSites[0]) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(constructionSites[0]);
+    }
+  } else if (repairTargets.length) {
+    var weakestStructure = repairTargets.reduce(function (result, current) {
+      if (current.hits < result.hits) {
+        return current;
+      } else {
+        return result;
+      }
+    }, repairTargets[0]);
+    if (creep.repair(weakestStructure) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(weakestStructure);
+    }
+  } else {
+    creep.moveTo(spawn);
+  }
+}
+
+function operateBuilder(creep, state) {
+  if (!creep) return;
+  setBuilderMode(creep);
+  builderModeOperations[creep.memory.mode](creep, state);
+}
 
 function operateDefender(creep, state) {}
 
