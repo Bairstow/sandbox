@@ -212,7 +212,7 @@ function constructCreep(state) {
   }
   var shouldCreateFirstHarvester = harvesterCount === 0 && energyAvailable >= 300;
   var shouldCreateRestHarvester = harvesterCount > 0 && energyCapacityAvailable === energyAvailable;
-  var shouldCreateHarvester = !!unharvestedSourceId && shouldCreateFirstHarvester;
+  var shouldCreateHarvester = !!unharvestedSourceId && (shouldCreateFirstHarvester || shouldCreateRestHarvester);
   if (shouldCreateHarvester) {
     var creepPartDefinition = generateCreepPartDefinition(energyAvailable, harvesterPartRatio);
     var creepName = state.originalSpawn.createCreep(creepPartDefinition, undefined, // undefined argument auto-generates creep name
