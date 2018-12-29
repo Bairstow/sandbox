@@ -76,6 +76,12 @@ var _game = __webpack_require__(5);
 
 var state = (0, _game.constructInitialState)();
 var loop = function loop() {
+  if (!Memory.setupInitialised) {
+    Memory.setupInitialised = true;
+    _config.setupConfig.map(function (datum) {
+      datum.module(state);
+    });
+  }
   _config.executionConfig.map(function (datum) {
     if ((0, _game.tickMultipleOf)(datum.interval)) {
       datum.module(state);
@@ -97,31 +103,29 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.executionConfig = undefined;
+exports.setupConfig = exports.executionConfig = undefined;
 
 var _memory = __webpack_require__(2);
+
+var _plan = __webpack_require__(6);
 
 var _construct = __webpack_require__(3);
 
 var _operate = __webpack_require__(4);
 
-// import { assess } from './module/state';
 var executionConfig = exports.executionConfig = [{
   module: _memory.cleanupCreep,
   interval: 200
-},
-/*
-{
-  module: assess,
-  interval: 100,
-},
-*/
-{
+}, {
   module: _construct.constructCreep,
   interval: 50
 }, {
   module: _operate.operateCreep,
   interval: 1
+}];
+
+var setupConfig = exports.setupConfig = [{
+  module: _plan.planStructure
 }];
 
 /***/ }),
@@ -429,6 +433,68 @@ var constructInitialState = exports.constructInitialState = function constructIn
     originalRoom: originalSpawn.room
   };
 };
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.planStructure = planStructure;
+var extensionLocations = {
+  NE: { x: 2, y: -2 },
+  NEO: { x: 2, y: -3 },
+  NNE: { x: 1, y: -2 },
+  NNEO: { x: 1, y: -3 },
+  ENE: { x: 2, y: -1 },
+  ENEO: { x: 3, y: -1 },
+  NENE: { x: 3, y: -2 },
+  SE: { x: 2, y: 2 },
+  SEO: { x: 2, y: 3 },
+  SSE: { x: 1, y: 2 },
+  SSEO: { x: 1, y: 3 },
+  ESE: { x: 2, y: 1 },
+  ESEO: { x: 3, y: 1 },
+  SESE: { x: 3, y: 2 },
+  SW: { x: -2, y: 2 },
+  SWO: { x: -2, y: 3 },
+  SSW: { x: -1, y: 2 },
+  SSWO: { x: -1, y: 3 },
+  WSW: { x: -2, y: 1 },
+  WSWO: { x: -3, y: 1 },
+  SWSW: { x: -3, y: 2 },
+  NW: { x: -2, y: -2 },
+  NWO: { x: -2, y: -3 },
+  NNW: { x: -1, y: -2 },
+  NNWO: { x: -1, y: -3 },
+  WNW: { x: -2, y: -1 },
+  WNWO: { x: -3, y: -1 },
+  NWNW: { x: -3, y: -2 }
+};
+
+function planExtensions(state) {
+  var room = state.originalRoom;
+  var spawn = state.originalSpawn;
+  var extensionLabels = Object.keys(extensionLocations);
+  extensionLabels.forEach(function (label) {
+    var extensionLocationX = spawn.pos.x + extensionLocations[label].x;
+    var extensionLocationY = spawn.pos.y + extensionLocations[label].y;
+    var roomTerrain = Game.map.getRoomTerrain(room.name);
+    var targetTerrain = roomTerrain.get(extensionLocationX, extensionLocationY);
+    if (targetTerrain !== TERRAIN_MASK_WALL) {
+      room.createConstructionSite(extensionLocationX, extensionLocationY, STRUCTURE_EXTENSION);
+    }
+  });
+}
+
+function planStructure(state) {
+  console.log('Planning structure layout...');
+  planExtensions(state);
+}
 
 /***/ })
 /******/ ])));

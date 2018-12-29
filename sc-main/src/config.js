@@ -1,5 +1,5 @@
 import { cleanupCreep } from './module/memory';
-// import { assess } from './module/state';
+import { planStructure } from './module/plan';
 import { constructCreep } from './module/construct';
 import { operateCreep } from './module/operate';
 
@@ -8,12 +8,6 @@ export const executionConfig = [
     module: cleanupCreep,
     interval: 200,
   },
-  /*
-  {
-    module: assess,
-    interval: 100,
-  },
-  */
   {
     module: constructCreep,
     interval: 50,
@@ -21,5 +15,11 @@ export const executionConfig = [
   {
     module: operateCreep,
     interval: 1,
+  },
+];
+
+export const setupConfig = [
+  {
+    module: planStructure,
   },
 ];
