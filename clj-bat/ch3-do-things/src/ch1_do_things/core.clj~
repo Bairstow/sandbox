@@ -1,0 +1,22 @@
+(ns ch1-do-things.core
+  (:gen-class))
+
+(defn -main
+  "I don't do a whole lot ... yet."
+  [& args]
+  (println "Hello, World!"))
+
+(str "concate " "this " "string")
+
+(if true
+  (do (println "Success!")
+      "By Zeus's hammer!")
+  (do (println "Failure!")
+      "By Aquaman's trident!"))
+
+(doc nil?)
+(nil? nil)
+(nil? false)
+
+(+ 1 (* 2 (+ 3 (+ 6 7))) (* 4 5))
+

@@ -1,0 +1,13 @@
+### Control flow
+- if - boolean conditional with else form
+- do - wrap and eval multiple forms in a single statement
+- when - combination and if and do with no else form
+- truthiness and equality - nil and false both considered falsey
+- or - returns first truthy value or final value
+- and - returns first falsey value or final value
+
+### Declaration
+- def - used to bind a name to a value
+
+
+#### Data structures
