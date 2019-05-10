@@ -1,0 +1,10 @@
+(ns ch5-functional-prog.core
+  (:gen-class))
+
+(defn sum
+  ([vals]
+     (sum vals 0))
+  ([vals accumulating-total]
+     (if (empty? vals)
+       accumulating-total
+       (recur (rest vals) (+ (first vals) accumulating-total)))))

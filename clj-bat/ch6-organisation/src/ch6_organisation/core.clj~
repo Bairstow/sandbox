@@ -1,0 +1,3 @@
+(ns ch6-organisation.core
+  (:gen-class))
+

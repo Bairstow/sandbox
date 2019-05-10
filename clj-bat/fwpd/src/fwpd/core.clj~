@@ -1,0 +1,5 @@
+(ns fwpd.core
+  (:gen-class))
+
+(def filename "suspects.csv")
+

@@ -1,0 +1,16 @@
+*** Project Ideas
+- Local restaurant picker (Yelp)
+- Backup/dropbox learning resources/files
+- Script ticket purchase via api/automation
+- Algorithmic trading
+- Collate company market research by product or search query
+- Automate social media co-ordination/timing
+- Plant watering
+- Mentor suggestion/contact automation
+- Sati at home notification
+- Fantasy sports/betting account management
+- Meal and grocery planning for diet
+- CLI Tool to create calendar entries based on org mode agenda docs
+- Alert on desired items listing on gumtree/marketplace/discounted at retail
+- Rhythm trainer (drum practice)
+- Presentation interaction framework (audience participation)
